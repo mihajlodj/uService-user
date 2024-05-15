@@ -1,4 +1,4 @@
-package ftn.userservice.security;
+package ftn.userservice.config.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -15,8 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.security.SignatureException;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class AuthenticationFilter extends OncePerRequestFilter {
 
@@ -40,9 +39,15 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
             String username = claims.getSubject();
             String role = claims.get("role", String.class);
-            if (username != null && role != null) {
+            UUID userId = claims.get("userId", UUID.class);
+
+            if (username != null && role != null && userId != null) {
                 List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+
+                Map<String, Object> details = new HashMap<>();
+                details.put("userId", userId);
+                authentication.setDetails(details);
 
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
