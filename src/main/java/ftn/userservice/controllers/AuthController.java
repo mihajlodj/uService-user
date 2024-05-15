@@ -1,8 +1,7 @@
 package ftn.userservice.controllers;
 
 import ftn.userservice.domain.dtos.LoginRequest;
-import ftn.userservice.domain.entities.User;
-import ftn.userservice.services.UserService;
+import ftn.userservice.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,13 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserService userService;
+    private final AuthService authService;
 
     @PostMapping
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        //User user = authService.login(request.getEmail(), request.getPassword());
-        //return ResponseEntity.ok(user);
-        return null; //TODO
+        return ResponseEntity.ok(authService.login(request.getUsername(), request.getPassword()));
     }
 
 }

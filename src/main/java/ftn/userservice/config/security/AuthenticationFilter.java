@@ -1,4 +1,4 @@
-package ftn.userservice.security;
+package ftn.userservice.config.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

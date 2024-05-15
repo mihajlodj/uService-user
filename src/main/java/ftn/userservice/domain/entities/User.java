@@ -28,6 +28,9 @@ public class User {
     private UUID id;
 
     @Column(nullable = false, unique = true)
+    private String username;
+
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -44,6 +47,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private Role role = Role.GUEST;
+
+    @Transient
+    private String accessToken;
 
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
