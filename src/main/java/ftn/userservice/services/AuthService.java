@@ -1,6 +1,8 @@
 package ftn.userservice.services;
 
 import ftn.userservice.domain.entities.User;
+import ftn.userservice.exception.exceptions.BadRequestException;
+import ftn.userservice.exception.exceptions.NotFoundException;
 import ftn.userservice.repositories.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -25,12 +27,13 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     public User login(String username, String password){
-        User user = userRepository.findByUsername(username).orElseThrow();
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            //TODO
-        }
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("User doesn't exist"));
 
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new BadRequestException("Bad password");
+        }
         user.setAccessToken(generateToken(user));
+
         return user;
     }
 
@@ -38,6 +41,7 @@ public class AuthService {
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .claim("role", user.getRole())
+                .claim("userId", user.getId())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
