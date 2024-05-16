@@ -34,17 +34,6 @@ public class UserService {
         return getById(id);
     }
 
-    public UserDto create(UserCreateRequest userCreateRequest) {
-        if(!userCreateRequest.getPassword().equals(userCreateRequest.getRepeatPassword())) {
-            throw new BadRequestException("Passwords are not the same");
-        }
-
-        User user = UserMapper.INSTANCE.fromCreateRequest(userCreateRequest);
-        user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
-
-        return UserMapper.INSTANCE.toDto(userRepository.save(user));
-    }
-
     public UserDto update(UserUpdateRequest userUpdateRequest) {
         UUID id = AuthUtils.getLoggedUserId();
         User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User doesn't exist"));

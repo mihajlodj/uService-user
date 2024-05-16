@@ -7,6 +7,7 @@ import ftn.userservice.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,11 +20,6 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<?> me() {
         return ResponseEntity.ok(userService.me());
-    }
-
-    @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid UserCreateRequest userCreateRequest) {
-        return ResponseEntity.ok(userService.create(userCreateRequest));
     }
 
     @PutMapping
