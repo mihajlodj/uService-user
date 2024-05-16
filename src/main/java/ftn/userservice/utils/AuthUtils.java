@@ -20,13 +20,11 @@ public class AuthUtils {
 
     public static UUID getLoggedUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
+        if (authentication != null && authentication.isAuthenticated()) {
             Object details = authentication.getDetails();
-            if (details instanceof Map<?,?> detailsMap) {
-                Object userId = detailsMap.get("userId");
-                if (userId instanceof UUID) {
-                    return (UUID) userId;
-                }
+            if (details instanceof Map<?, ?> detailsMap) {
+                String userId = (String) detailsMap.get("userId");
+                return UUID.fromString(userId);
             }
         }
 

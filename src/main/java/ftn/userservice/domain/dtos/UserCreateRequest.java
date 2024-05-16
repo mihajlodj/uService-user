@@ -1,7 +1,9 @@
 package ftn.userservice.domain.dtos;
 
 import ftn.userservice.domain.entities.Role;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,18 +15,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserCreateRequest {
 
-    @NotEmpty
+    @NotEmpty(message = "Username is required")
     private String username;
-    @NotEmpty
+    @NotEmpty(message = "Email is required")
+    @Email(message = "Invalid email format")
     private String email;
-    @NotEmpty
+    @NotEmpty(message = "Password is required")
     private String password;
-    @NotEmpty
+    @NotEmpty(message = "Password is required")
     private String repeatPassword;
+    @NotEmpty(message = "First name is required")
     private String firstName;
+    @NotEmpty(message = "Last name is required")
     private String lastName;
     @Builder.Default
-    @NotEmpty
+    @NotNull(message = "Role is required")
     private Role role = Role.GUEST;
 
 }

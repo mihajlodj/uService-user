@@ -1,38 +1,59 @@
 package ftn.userservice.exception;
 
+import ftn.userservice.exception.exceptions.AuthorizationException;
 import ftn.userservice.exception.exceptions.BadRequestException;
 import ftn.userservice.exception.exceptions.ForbiddenException;
 import ftn.userservice.exception.exceptions.NotFoundException;
 import jakarta.validation.ValidationException;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.stream.Collectors;
+
 
 @ControllerAdvice
+@Slf4j
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<?> handleValidation(ValidationException exception) {
-        return ResponseEntity.status(400).body(new ExceptionMessage("Invalid form: " + exception.getMessage()));
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleValidation(MethodArgumentNotValidException exception) {
+        log.error(exception.getMessage(), exception);
+        String errorMessage = exception.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+        return ResponseEntity.status(400).body(new ExceptionMessage("Invalid form: " + errorMessage));
     }
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<?> handleNotFound(NotFoundException exception) {
+        log.error(exception.getMessage(), exception);
         HttpStatus status = getResponseStatus(exception.getClass());
         return ResponseEntity.status(status).body(new ExceptionMessage(exception.getMessage()));
     }
 
     @ExceptionHandler(ForbiddenException.class)
     public ResponseEntity<?> handleForbidden(ForbiddenException exception) {
+        log.error(exception.getMessage(), exception);
         HttpStatus status = getResponseStatus(exception.getClass());
         return ResponseEntity.status(status).body(new ExceptionMessage("Forbidden: " + exception.getMessage()));
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<?> handleNotFound(BadRequestException exception) {
+    public ResponseEntity<?> handleBadRequest(BadRequestException exception) {
+        log.error(exception.getMessage(), exception);
+        HttpStatus status = getResponseStatus(exception.getClass());
+        return ResponseEntity.status(status).body(new ExceptionMessage(exception.getMessage()));
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<?> handleAuthorization(AuthorizationException exception) {
+        log.error(exception.getMessage(), exception);
         HttpStatus status = getResponseStatus(exception.getClass());
         return ResponseEntity.status(status).body(new ExceptionMessage(exception.getMessage()));
     }
