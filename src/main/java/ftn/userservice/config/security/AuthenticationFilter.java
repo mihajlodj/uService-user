@@ -39,7 +39,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
             String username = claims.getSubject();
             String role = claims.get("role", String.class);
-            UUID userId = claims.get("userId", UUID.class);
+            String userId = claims.get("userId", String.class);
 
             if (username != null && role != null && userId != null) {
                 List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
@@ -49,7 +49,6 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                 details.put("userId", userId);
                 authentication.setDetails(details);
 
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {

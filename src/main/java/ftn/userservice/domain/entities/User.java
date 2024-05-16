@@ -13,7 +13,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "\"user\"")
