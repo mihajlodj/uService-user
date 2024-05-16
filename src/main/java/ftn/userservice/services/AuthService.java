@@ -1,6 +1,9 @@
 package ftn.userservice.services;
 
+import ftn.userservice.domain.dtos.UserCreateRequest;
+import ftn.userservice.domain.dtos.UserDto;
 import ftn.userservice.domain.entities.User;
+import ftn.userservice.domain.mappers.UserMapper;
 import ftn.userservice.exception.exceptions.BadRequestException;
 import ftn.userservice.exception.exceptions.NotFoundException;
 import ftn.userservice.repositories.UserRepository;
@@ -35,6 +38,17 @@ public class AuthService {
         user.setAccessToken(generateToken(user));
 
         return user;
+    }
+
+    public UserDto create(UserCreateRequest userCreateRequest) {
+        if(!userCreateRequest.getPassword().equals(userCreateRequest.getRepeatPassword())) {
+            throw new BadRequestException("Passwords are not the same");
+        }
+
+        User user = UserMapper.INSTANCE.fromCreateRequest(userCreateRequest);
+        user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
+
+        return UserMapper.INSTANCE.toDto(userRepository.save(user));
     }
 
     private String generateToken(User user) {

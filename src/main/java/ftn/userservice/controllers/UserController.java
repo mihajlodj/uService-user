@@ -1,7 +1,6 @@
 package ftn.userservice.controllers;
 
 import ftn.userservice.domain.dtos.ChangePasswordRequest;
-import ftn.userservice.domain.dtos.UserCreateRequest;
 import ftn.userservice.domain.dtos.UserUpdateRequest;
 import ftn.userservice.services.UserService;
 import jakarta.validation.Valid;
@@ -19,11 +18,6 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<?> me() {
         return ResponseEntity.ok(userService.me());
-    }
-
-    @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid UserCreateRequest userCreateRequest) {
-        return ResponseEntity.ok(userService.create(userCreateRequest));
     }
 
     @PutMapping

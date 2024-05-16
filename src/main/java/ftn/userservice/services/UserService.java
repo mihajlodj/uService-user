@@ -1,7 +1,6 @@
 package ftn.userservice.services;
 
 import ftn.userservice.domain.dtos.ChangePasswordRequest;
-import ftn.userservice.domain.dtos.UserCreateRequest;
 import ftn.userservice.domain.dtos.UserDto;
 import ftn.userservice.domain.dtos.UserUpdateRequest;
 import ftn.userservice.domain.entities.User;
@@ -32,17 +31,6 @@ public class UserService {
     public UserDto me() {
         UUID id = AuthUtils.getLoggedUserId();
         return getById(id);
-    }
-
-    public UserDto create(UserCreateRequest userCreateRequest) {
-        if(!userCreateRequest.getPassword().equals(userCreateRequest.getRepeatPassword())) {
-            throw new BadRequestException("Passwords are not the same");
-        }
-
-        User user = UserMapper.INSTANCE.fromCreateRequest(userCreateRequest);
-        user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
-
-        return UserMapper.INSTANCE.toDto(userRepository.save(user));
     }
 
     public UserDto update(UserUpdateRequest userUpdateRequest) {
