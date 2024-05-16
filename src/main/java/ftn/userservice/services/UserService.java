@@ -1,7 +1,6 @@
 package ftn.userservice.services;
 
 import ftn.userservice.domain.dtos.ChangePasswordRequest;
-import ftn.userservice.domain.dtos.UserCreateRequest;
 import ftn.userservice.domain.dtos.UserDto;
 import ftn.userservice.domain.dtos.UserUpdateRequest;
 import ftn.userservice.domain.entities.User;

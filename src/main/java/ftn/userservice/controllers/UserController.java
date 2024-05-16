@@ -1,13 +1,11 @@
 package ftn.userservice.controllers;
 
 import ftn.userservice.domain.dtos.ChangePasswordRequest;
-import ftn.userservice.domain.dtos.UserCreateRequest;
 import ftn.userservice.domain.dtos.UserUpdateRequest;
 import ftn.userservice.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
