@@ -1,18 +1,17 @@
-package com.whitecitysoft.aisocial.services;
+package ftn.userservice.services;
 
-import com.whitecitysoft.aisocial.AuthPostgresIntegrationTest;
+import ftn.userservice.AuthPostgresIntegrationTest;
 import ftn.userservice.domain.dtos.UserCreateRequest;
 import ftn.userservice.domain.dtos.UserDto;
 import ftn.userservice.domain.entities.Role;
 import ftn.userservice.domain.entities.User;
+import ftn.userservice.exception.exceptions.BadRequestException;
 import ftn.userservice.repositories.UserRepository;
-import ftn.userservice.services.AuthService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Sql("/sql/auth.sql")
 public class AuthServiceTest extends AuthPostgresIntegrationTest {
@@ -44,13 +43,22 @@ public class AuthServiceTest extends AuthPostgresIntegrationTest {
         assertEquals(request.getRole(), createdUser.getRole());
 
         User retrievedUser = userRepository.findByUsername(request.getUsername()).orElse(null);
-        System.out.println(retrievedUser.getPassword());
         assertNotNull(retrievedUser);
         assertEquals(request.getEmail(), retrievedUser.getEmail());
     }
 
+    @Test
     public void testLogin() {
-        //TODO
+        User loggedUser = authService.login("host", "123456");
+
+        assertNotNull(loggedUser);
+        assertEquals("host", loggedUser.getUsername());
+        assertNotNull(loggedUser.getAccessToken());
+    }
+
+    @Test
+    public void testInvalidLogin() {
+        assertThrows(BadRequestException.class, () -> authService.login("host", "badPass"));
     }
 
 }

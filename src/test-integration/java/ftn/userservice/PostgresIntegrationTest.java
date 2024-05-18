@@ -1,4 +1,4 @@
-package com.whitecitysoft.aisocial;
+package ftn.userservice;
 
 import org.junit.ClassRule;
 import org.springframework.test.context.DynamicPropertyRegistry;

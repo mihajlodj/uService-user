@@ -1,6 +1,5 @@
-package com.whitecitysoft.aisocial;
+package ftn.userservice;
 
-import ftn.userservice.UserServiceApplication;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;

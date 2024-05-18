@@ -1,24 +1,18 @@
-package com.whitecitysoft.aisocial.services;
+package ftn.userservice.services;
 
-import com.whitecitysoft.aisocial.AuthPostgresIntegrationTest;
+import ftn.userservice.AuthPostgresIntegrationTest;
 import ftn.userservice.domain.dtos.ChangePasswordRequest;
-import ftn.userservice.domain.dtos.UserCreateRequest;
 import ftn.userservice.domain.dtos.UserDto;
 import ftn.userservice.domain.dtos.UserUpdateRequest;
-import ftn.userservice.domain.entities.Role;
 import ftn.userservice.domain.entities.User;
 import ftn.userservice.exception.exceptions.NotFoundException;
 import ftn.userservice.repositories.UserRepository;
-import ftn.userservice.services.UserService;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;

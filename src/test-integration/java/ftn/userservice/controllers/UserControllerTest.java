@@ -1,23 +1,16 @@
-package com.whitecitysoft.aisocial.web.controllers;
+package ftn.userservice.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.whitecitysoft.aisocial.AuthPostgresIntegrationTest;
-import ftn.userservice.domain.dtos.UserCreateRequest;
+import ftn.userservice.AuthPostgresIntegrationTest;
 import ftn.userservice.domain.dtos.UserUpdateRequest;
-import ftn.userservice.domain.entities.Role;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
 
-import java.util.Set;
-
-import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -42,29 +35,27 @@ public class UserControllerTest extends AuthPostgresIntegrationTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json"));
-                //.andExpect(jsonPath("$.id").value(userId));
-        //TODO
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.username").value("guest"));
     }
 
     @Test
     public void testUpdate() throws Exception {
-        //TODO
-        String userId = "e49fcaa5-4444-4444-4444-13e58187fea9";
         UserUpdateRequest userUpdateRequest = UserUpdateRequest.builder()
-                .email("standard@ais-test.com")
+                .username("guest")
+                .email("updated@ftn.com")
                 .firstName("Updated")
                 .lastName("User")
                 .build();
 
-        mockMvc.perform(put("/api/users/{userId}", userId)
+        mockMvc.perform(put("/api/users")
                         .header("Authorization", "Bearer")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userUpdateRequest)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.email").value("standard@ais-test.com"))
+                .andExpect(jsonPath("$.email").value("updated@ftn.com"))
                 .andExpect(jsonPath("$.firstName").value("Updated"))
                 .andExpect(jsonPath("$.lastName").value("User"));
     }
