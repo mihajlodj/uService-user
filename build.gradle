@@ -26,6 +26,21 @@ configurations {
     }
 }
 
+sourceSets {
+    testIntegration {
+        java {
+            compileClasspath += main.output
+            compileClasspath += main.compileClasspath
+
+            compileClasspath += test.output
+            compileClasspath += test.compileClasspath
+            runtimeClasspath += test.runtimeClasspath
+            srcDir file('src/test-integration/java')
+        }
+        resources.srcDir file('src/test-integration/resources')
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -76,5 +91,15 @@ dependencies {
 }
 
 tasks.named('test') {
+    useJUnitPlatform()
+}
+
+tasks.register('integrationTest', Test) {
+    testClassesDirs = sourceSets.testIntegration.output.classesDirs
+    classpath = sourceSets.testIntegration.runtimeClasspath
+
+    enableAssertions = true
+    setMaxHeapSize("4g")
+
     useJUnitPlatform()
 }
