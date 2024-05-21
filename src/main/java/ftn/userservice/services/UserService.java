@@ -45,8 +45,7 @@ public class UserService {
         UUID id = AuthUtils.getLoggedUserId();
         User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User doesn't exist"));
 
-        String oldPassword = passwordEncoder.encode(changePasswordRequest.getOldPassword());
-        if (!oldPassword.equals(user.getPassword())) {
+        if (!passwordEncoder.matches(changePasswordRequest.getOldPassword(), user.getPassword())) {
             throw new BadRequestException("Incorrect old password");
         }
 

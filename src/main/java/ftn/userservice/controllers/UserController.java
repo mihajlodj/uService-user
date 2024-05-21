@@ -6,7 +6,10 @@ import ftn.userservice.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -18,6 +21,12 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<?> me() {
         return ResponseEntity.ok(userService.me());
+    }
+
+    @GetMapping("{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> getById(@PathVariable UUID id) {
+        return ResponseEntity.ok(userService.getById(id));
     }
 
     @PutMapping
