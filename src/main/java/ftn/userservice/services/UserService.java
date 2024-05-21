@@ -59,4 +59,10 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void delete() {
+        UUID id = AuthUtils.getLoggedUserId();
+        //TODO check reservations when other services are done
+        userRepository.deleteById(id);
+    }
+
 }

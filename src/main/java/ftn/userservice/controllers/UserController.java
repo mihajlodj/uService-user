@@ -40,4 +40,10 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping
+    public ResponseEntity<?> delete() {
+        userService.delete();
+        return ResponseEntity.ok().build();
+    }
+
 }
