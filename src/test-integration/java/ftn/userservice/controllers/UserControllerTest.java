@@ -40,6 +40,31 @@ public class UserControllerTest extends AuthPostgresIntegrationTest {
     }
 
     @Test
+    public void testGet() throws Exception {
+        authenticateAdmin();
+        String userId = "e49fcaa5-d45b-4556-9d91-13e58187fea6";
+
+        mockMvc.perform(get("/api/users/" + userId)
+                        .header("Authorization", "Bearer")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.username").value("guest"));
+    }
+
+    @Test
+    public void testGetForbidden() throws Exception {
+        String userId = "e49fcaa5-d45b-4556-9d91-13e58187fea6";
+
+        mockMvc.perform(get("/api/users/" + userId)
+                        .header("Authorization", "Bearer")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
     public void testUpdate() throws Exception {
         UserUpdateRequest userUpdateRequest = UserUpdateRequest.builder()
                 .username("guest")
