@@ -19,7 +19,7 @@ public class PostgresIntegrationTest {
 
     @DynamicPropertySource
     static void registerPgProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", () -> "jdbc:tc:postgresql:12.6:///aisocial");
+        registry.add("spring.datasource.url", () -> "jdbc:tc:postgresql:12.6:///devops_user_db");
         registry.add("spring.datasource.username", () -> "devops_ftn");
         registry.add("spring.datasource.password", () -> "devops_ftn");
         registry.add("spring.datasource.hikari.maximumPoolSize", () -> 50);
