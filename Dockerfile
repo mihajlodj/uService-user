@@ -9,7 +9,7 @@ COPY build.gradle settings.gradle /home/user-service/
 COPY src /home/user-service/src
 
 # Build the project
-RUN gradle build --no-daemon -x test
+RUN gradle build --no-daemon
 
 # Using OpenJDK 17 for the runtime
 FROM openjdk:17-slim
