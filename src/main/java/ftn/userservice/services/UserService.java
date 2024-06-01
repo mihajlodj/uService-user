@@ -59,6 +59,13 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public UserDto updateNotifications() {
+        UUID id = AuthUtils.getLoggedUserId();
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User doesn't exist"));
+        user.setNotificationsAllowed(!user.isNotificationsAllowed());
+        return UserMapper.INSTANCE.toDto(userRepository.save(user));
+    }
+
     public void delete() {
         UUID id = AuthUtils.getLoggedUserId();
         //TODO check reservations when other services are done
