@@ -47,6 +47,10 @@ public class User {
     @Builder.Default
     private Role role = Role.GUEST;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean notificationsAllowed = true;
+
     @Transient
     private String accessToken;
 

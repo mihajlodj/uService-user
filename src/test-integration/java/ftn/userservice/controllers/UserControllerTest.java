@@ -86,6 +86,18 @@ public class UserControllerTest extends AuthPostgresIntegrationTest {
     }
 
     @Test
+    public void testChangeNotifications() throws Exception {
+        mockMvc.perform(put("/api/users/update-notifications")
+                        .header("Authorization", "Bearer")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.notificationsAllowed").value("false"));
+    }
+
+    @Test
     public void testDelete() throws Exception {
         mockMvc.perform(delete("/api/users")
                         .header("Authorization", "Bearer")

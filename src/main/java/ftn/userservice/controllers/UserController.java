@@ -40,6 +40,11 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/update-notifications")
+    public ResponseEntity<?> updateNotifications() {
+        return ResponseEntity.ok(userService.updateNotifications());
+    }
+
     @DeleteMapping
     public ResponseEntity<?> delete() {
         userService.delete();

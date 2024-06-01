@@ -20,5 +20,6 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private Role role;
+    private boolean notificationsAllowed;
 
 }
