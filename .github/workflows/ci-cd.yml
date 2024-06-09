@@ -36,10 +36,13 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build --no-daemon
 
       - name: Run tests
-        run: ./gradlew test
+        run: ./gradlew test --no-daemon
+
+      - name: Run integration tests
+        run: ./gradlew integrationTest --no-daemon
 
 #  docker-publish:
 #    needs: build-and-test
