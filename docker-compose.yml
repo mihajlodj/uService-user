@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  postgres-db:
+  postgres-db-user:
     image: postgres:latest
     ports:
       - "5433:5432"
@@ -15,7 +15,7 @@ services:
   user-service:
     build: .
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/devops_user_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db-user:5432/devops_user_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: devops123
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -24,7 +24,7 @@ services:
     networks:
       - ftn_devops_network
     depends_on:
-      - postgres-db
+      - postgres-db-user
     restart: on-failure
 
 networks:
@@ -32,4 +32,6 @@ networks:
     external: true
 
 volumes:
-  postgres-db:
+  postgres-db-user:
+
+# PREIMENUJ BAZU ZA SVAKI COMPOSE
