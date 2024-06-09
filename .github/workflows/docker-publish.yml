@@ -20,8 +20,8 @@ jobs:
       - name: Extract version from build.gradle
         id: get_version
         run: |
-          echo "VERSION=$(grep '^version' build.gradle | cut -d '=' -f2 | xargs)" >> $GITHUB_ENV
-          echo "Version extracted: $VERSION"
+          echo "VERSION=$(grep 'serviceVersion' build.gradle | cut -d\"'\" -f2)" >> $GITHUB_ENV
+          echo "Custom Version extracted: $VERSION"
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
@@ -31,5 +31,5 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-user-service:$VERSION .
-          docker push ${{ secrets.DOCKER_USERNAME }}/devops-user-service:$VERSION
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-user-service:${{ env.VERSION }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/devops-user-service:${{ env.VERSION }}
