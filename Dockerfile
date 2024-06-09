@@ -14,14 +14,13 @@ RUN gradle build --no-daemon
 # Using OpenJDK 17 for the runtime
 FROM openjdk:17-slim
 
-ARG VERSION=1.0.0
 ARG SERVICE_NAME="user-service"
 
 # Set the deployment directory
 WORKDIR /app
 
 # Copy the built JAR from the previous stage
-COPY --from=build /home/user-service/build/libs/$SERVICE_NAME-$VERSION.jar /app/app.jar
+COPY --from=build /home/user-service/build/libs/$SERVICE_NAME.jar /app/app.jar
 
 # Expose the port
 EXPOSE 8080
