@@ -38,3 +38,14 @@ jobs:
 
       - name: Run integration tests
         run: ./gradlew integrationTest --no-daemon
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectKey: "mihajlodj_uService-user"
+          organization: "mihajlodj"
+          args: >
+            -Dsonar.java.binaries=build/classes
