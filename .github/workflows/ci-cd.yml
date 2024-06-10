@@ -45,7 +45,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          projectKey: "mihajlodj_uService-user"
-          organization: "mihajlodj"
           args: >
-            -Dsonar.java.binaries=build/classes
+            -Dsonar.projectKey=mihajlodj_uService-user
+            -Dsonar.organization=mihajlodj
+            -Dsonar.java.binaries=build/classes/java/main
