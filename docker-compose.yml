@@ -25,7 +25,15 @@ services:
       - ftn_devops_network
     depends_on:
       - postgres-db-user
+      - zipkin
     restart: on-failure
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - ftn_devops_network
 
 networks:
   ftn_devops_network:
@@ -34,4 +42,3 @@ networks:
 volumes:
   postgres-db-user:
 
-# PREIMENUJ BAZU ZA SVAKI COMPOSE
