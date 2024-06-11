@@ -48,4 +48,8 @@ public abstract class AuthPostgresIntegrationTest extends PostgresIntegrationTes
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
+    public void unauthenticated() {
+        SecurityContextHolder.clearContext();
+    }
+
 }
