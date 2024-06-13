@@ -23,7 +23,8 @@ public class UserServiceTest {
     void setUp() {
         userRepository = mock(UserRepository.class);
         PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
-        userService = new UserService(userRepository, passwordEncoder);
+        RestService restService = mock(RestService.class);
+        userService = new UserService(userRepository, passwordEncoder, restService);
     }
 
     @Test
