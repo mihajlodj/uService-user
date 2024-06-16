@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -90,7 +91,7 @@ public class RestService {
             HttpEntity<String> httpRequest = new HttpEntity<>(headers);
 
             String url = reservationServiceUrl + "/api/reservation/delete/host/" + hostId;
-            restTemplate.delete(url);
+            restTemplate.exchange(url, HttpMethod.DELETE, httpRequest, Objects.class);
         } catch (Exception e) {
             log.error("Error while deleting lodges: ", e);
             throw new RuntimeException("Unexpected error while deleting lodges");

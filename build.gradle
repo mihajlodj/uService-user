@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        serviceVersion = '1.0.1'
+        serviceVersion = '1.2.0'
         springBootVersion = '3.2.0'
         querydslVersion = "5.0.0"
         mapstructVersion = "1.5.5.Final"
