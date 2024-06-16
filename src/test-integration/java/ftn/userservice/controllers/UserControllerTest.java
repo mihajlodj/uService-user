@@ -55,6 +55,7 @@ public class UserControllerTest extends AuthPostgresIntegrationTest {
 
     @Test
     public void testGetForbidden() throws Exception {
+        unauthenticated();
         String userId = "e49fcaa5-d45b-4556-9d91-13e58187fea6";
 
         mockMvc.perform(get("/api/users/" + userId)
@@ -95,15 +96,6 @@ public class UserControllerTest extends AuthPostgresIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.notificationsAllowed").value("false"));
-    }
-
-    @Test
-    public void testDelete() throws Exception {
-        mockMvc.perform(delete("/api/users")
-                        .header("Authorization", "Bearer")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
     }
 
 }

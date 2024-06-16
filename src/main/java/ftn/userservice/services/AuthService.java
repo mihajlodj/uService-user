@@ -11,6 +11,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 public class AuthService {
@@ -36,6 +38,7 @@ public class AuthService {
             throw new BadRequestException("Bad password");
         }
         user.setAccessToken(generateToken(user));
+        log.info(user.getUsername() + " logged in");
 
         return user;
     }
@@ -47,6 +50,7 @@ public class AuthService {
 
         User user = UserMapper.INSTANCE.fromCreateRequest(userCreateRequest);
         user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
+        log.info("Registering a new user: " + user.getEmail());
 
         return UserMapper.INSTANCE.toDto(userRepository.save(user));
     }

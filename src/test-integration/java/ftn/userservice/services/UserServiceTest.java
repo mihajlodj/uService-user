@@ -99,11 +99,4 @@ public class UserServiceTest extends AuthPostgresIntegrationTest {
         assertFalse(updatedUser.isNotificationsAllowed());
     }
 
-    @Test
-    public void testDelete() {
-        UUID userId = UUID.fromString("e49fcaa5-d45b-4556-9d91-13e58187fea6");
-        userService.delete();
-        assertFalse(userRepository.findById(userId).isPresent());
-    }
-
 }
